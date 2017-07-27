@@ -49,6 +49,9 @@ public class LoanDisbursment {
 		this.disbursmentMode = disbursmentMode;
 	}
 	
-    
+    public String toString()
+    {
+    	return "";
+    }
     
 }
