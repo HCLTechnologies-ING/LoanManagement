@@ -99,7 +99,7 @@ public class Loan implements Serializable {
 		return totalRepaidAmount;
 	}
 
-	public void setTotalRepaidAmount(Double totalRepaidAmount) {
+	public void setTotalRepaidAmount(final Double totalRepaidAmount) {
 		this.totalRepaidAmount = totalRepaidAmount;
 	}
 
