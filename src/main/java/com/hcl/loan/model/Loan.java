@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 public class Loan implements Serializable {
 	
 	/**
-	 * Serial version unique id.
+	 * Serial version unique id
 	 */
 	private static final long serialVersionUID = 1461934723929503402L;
 	private Long loanId;
