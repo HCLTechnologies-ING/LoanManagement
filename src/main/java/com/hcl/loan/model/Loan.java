@@ -131,4 +131,5 @@ public class Loan implements Serializable {
 		this.remarks = remarks;
 	}
 
+	
 }
