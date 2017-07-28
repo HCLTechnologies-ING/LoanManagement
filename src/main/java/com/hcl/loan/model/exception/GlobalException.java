@@ -25,6 +25,14 @@ public class GlobalException {
 		ErrorDetail errorDetail = new ErrorDetail(HttpStatus.BAD_REQUEST.name(), errorDetails.toString());
 		return new ResponseEntity<>(errorDetail, HttpStatus.BAD_REQUEST);
 	}
+	
+	@ExceptionHandler(ResourceNotFoundException.class)
+	public ResponseEntity<ErrorDetail> handleException(ResourceNotFoundException resourceException) {
+		String errorMessage = messageSource.getMessage("error.method.resource.error", new Object[] {},
+				LocaleContextHolder.getLocale());
+		ErrorDetail errorDetail = new ErrorDetail(HttpStatus.INTERNAL_SERVER_ERROR.name(), errorMessage);
+		return new ResponseEntity<>(errorDetail, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 
 	@ExceptionHandler(DataAccessException.class)
 	public ResponseEntity<ErrorDetail> handleDataAccessException(DataAccessException dae) {
