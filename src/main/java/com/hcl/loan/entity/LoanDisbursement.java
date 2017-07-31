@@ -4,8 +4,13 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
 import org.springframework.data.annotation.Id;
-import org.springframework.data.jpa.repository.Temporal;
 
 /**
  * The persistent class for the loan_disbursement database table.
@@ -24,14 +29,14 @@ public class LoanDisbursement implements Serializable {
 	@Column(name = "CREATED_BY")
 	private BigInteger createdBy;
 
-	@Temporal(TemporalType.DATE)
+	//@Temporal(TemporalType.DATE)
 	@Column(name = "CREATED_DATE")
 	private Date createdDate;
 
 	@Column(name = "DISBURSED_TO_ACCOUNT")
 	private String disbursedToAccount;
 
-	@Temporal(TemporalType.DATE)
+	//@Temporal(TemporalType.DATE)
 	@Column(name = "DISBURSEMENT_DATE")
 	private Date disbursementDate;
 
@@ -44,7 +49,7 @@ public class LoanDisbursement implements Serializable {
 	@Column(name = "MODIFY_BY")
 	private BigInteger modifyBy;
 
-	@Temporal(TemporalType.DATE)
+	//@Temporal(TemporalType.DATE)
 	@Column(name = "MODIFY_DATE")
 	private Date modifyDate;
 
