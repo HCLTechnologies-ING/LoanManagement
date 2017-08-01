@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import com.hcl.loan.model.Loan;
 import com.hcl.loan.model.User;
 /**
- * 
+ * Rest repository service .
  * @author vikash.km
  *
  */
