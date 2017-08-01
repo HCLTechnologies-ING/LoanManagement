@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 /**
  * 
  * Model class for Loan.
- * 
  *
  */
 public class Loan implements Serializable {
