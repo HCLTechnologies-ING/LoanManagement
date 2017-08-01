@@ -26,7 +26,7 @@ public class LoanController {
 			produces=MediaType.APPLICATION_JSON_UTF8_VALUE, consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<Long> initiateNewLoan(@RequestBody User user, @RequestBody Loan loan){
 		
-		boolean isValidated = validateLoanRequest(loan);
+		boolean isValidated = validateLoanRequest(user);
 		
 		Long referenceId = 0L;
 		
@@ -39,8 +39,8 @@ public class LoanController {
 		return new ResponseEntity<Long>(referenceId, HttpStatus.CREATED);
 	}
 
-	private boolean validateLoanRequest(Loan loan) {
-		// TODO Auto-generated method stub
+	private boolean validateLoanRequest(User user) {
+		// TODO Validate User filled data
 		return false;
 	}
 

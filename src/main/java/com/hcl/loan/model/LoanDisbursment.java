@@ -9,7 +9,8 @@ public class LoanDisbursment {
     private Date disbursmentDate;
     private Integer  numberOfChecks;
     private String disbursmentMode;
-    private String emailNotification;
+   	private String emailNotification;
+    private Long   accountNumber;
     
 	
 	public String getEmailNotification() {
@@ -54,5 +55,10 @@ public class LoanDisbursment {
     	
     	return "";//  for now leave it
     }
-    
+    public Long getAccountNumber() {
+		return accountNumber;
+	}
+	public void setAccountNumber(Long accountNumber) {
+		this.accountNumber = accountNumber;
+	}
 }
