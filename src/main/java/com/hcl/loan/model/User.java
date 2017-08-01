@@ -12,7 +12,7 @@ import com.hcl.loan.entity.UserAddress;
 public class User implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	private String userId;
+	private Integer userId;
 	private String bankAccountNo;
 	private String bankIfscCode;
 	private String bankName;
@@ -54,10 +54,11 @@ public class User implements Serializable {
 	public void setRole(Role role) {
 		this.role = role;
 	}
-	public String getUserId() {
+	
+	public Integer getUserId() {
 		return userId;
 	}
-	public void setUserId(String userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 	public String getBankAccountNo() {

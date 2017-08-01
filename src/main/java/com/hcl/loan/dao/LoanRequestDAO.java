@@ -1,10 +1,9 @@
 package com.hcl.loan.dao;
 
-import com.hcl.loan.model.Loan;
-import com.hcl.loan.model.User;
+import com.hcl.loan.entity.Loan;
 
 public interface LoanRequestDAO {
 
-	public void persistNewLoanRequest(User user, Loan loan);
+	public void persistNewLoanRequest(Loan loan);
 
 }
