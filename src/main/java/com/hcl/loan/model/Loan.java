@@ -14,12 +14,13 @@ public class Loan implements Serializable {
 	 * Serial version unique id
 	 */
 	private static final long serialVersionUID = 1461934723929503402L;
+	
 	private Long loanId;
 	private Long roleName;
 	private LocalDateTime startDate;
 	private LocalDateTime endDate;
-	private int loanTypeId;
-	private int userId; 
+	private Integer loanTypeId;
+	private Integer userId; 
 	private Double monthlyEMI;
 	private Double monthlyInterest;
 	private Integer tenure;
@@ -29,7 +30,7 @@ public class Loan implements Serializable {
 	private String loanStatus;
 	private String pendingWith;
 	private String remarks;
-	private boolean eligible;
+	private Boolean eligible;
 	public Long getLoanId() {
 		return loanId;
 	}
@@ -54,16 +55,16 @@ public class Loan implements Serializable {
 	public void setEndDate(LocalDateTime endDate) {
 		this.endDate = endDate;
 	}
-	public int getLoanTypeId() {
+	public Integer getLoanTypeId() {
 		return loanTypeId;
 	}
-	public void setLoanTypeId(int loanTypeId) {
+	public void setLoanTypeId(Integer loanTypeId) {
 		this.loanTypeId = loanTypeId;
 	}
-	public int getUserId() {
+	public Integer getUserId() {
 		return userId;
 	}
-	public void setUserId(int userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 	public Double getMonthlyEMI() {
@@ -120,10 +121,10 @@ public class Loan implements Serializable {
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
-	public boolean isEligible() {
+	public Boolean getEligible() {
 		return eligible;
 	}
-	public void setEligible(boolean eligible) {
+	public void setEligible(Boolean eligible) {
 		this.eligible = eligible;
 	}
 	
