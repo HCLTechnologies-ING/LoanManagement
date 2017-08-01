@@ -14,9 +14,10 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 import com.hcl.loan.dao.LoanDisbursmentDaoImpl;
-import com.hcl.loan.dao.impl.LoanApprovalDAOImpl;
+import com.hcl.loan.dao.LoanRequestDAOImpl;
 import com.hcl.loan.service.LoanDisbursmentServiceImpl;
-import com.hcl.loan.service.impl.LoanApprovalServiceImpl;
+import com.hcl.loan.service.LoanRequestServiceImpl;
+
 
 @Configuration
 @EnableWebMvc
@@ -61,11 +62,21 @@ public class LoanWebConfig {
 	        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 	        dataSource.setUrl("jdbc:mysql://localhost:3306/mydb");
 	        dataSource.setUsername("root");
-	        dataSource.setPassword("Welcome0!");
+	        dataSource.setPassword("");
 	         
 	        return dataSource;
-	    }
-	     
+	    }  
+	 
+	 @Bean
+	 public LoanRequestServiceImpl getLoanRequestService() {
+		 return new LoanRequestServiceImpl();
+	 }
+	 
+	 @Bean
+	 public LoanRequestDAOImpl getLoanRequestDAO() {
+		 return new LoanRequestDAOImpl(getDataSource());
+	 }
+	 
 
 }
 
