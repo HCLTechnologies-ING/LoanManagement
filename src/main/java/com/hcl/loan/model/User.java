@@ -5,7 +5,7 @@ import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
-import com.hcl.loan.entity.Loan;
+import com.hcl.loan.model.Loan;
 import com.hcl.loan.entity.Role;
 import com.hcl.loan.entity.UserAddress;
 
