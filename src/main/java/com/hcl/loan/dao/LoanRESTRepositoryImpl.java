@@ -12,6 +12,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import com.hcl.loan.model.Loan;
+import com.hcl.loan.model.User;
 /**
  * 
  * @author vikash.km
@@ -19,7 +20,7 @@ import com.hcl.loan.model.Loan;
  */
 
 @Repository
-public class LoanRESTRepositoryImpl implements LoanRESTRepository {
+public class LoanRESTRepositoryImpl implements LoanRESTRepository{
 	
 	private static final Logger LOGGER = Logger.getLogger(LoanRESTRepositoryImpl.class);
 	private RestTemplate restTemplate;
@@ -68,5 +69,31 @@ public class LoanRESTRepositoryImpl implements LoanRESTRepository {
 		return urlBuilder.append("?").append("appliedLoanAmount="+loan.getAppliedLoanAmount()).append("&")
 		.append("loanDuration="+loan.getTenure()).append("&").append("rateOfInterest="+loan.getMonthlyInterest()).toString();
 	}
+	/**
+	 * Send request for loan approval.
+	 * @param user
+	 * @param loan
+	 */
+	@Override
+	public void sendApprovalRequest(final User user, final Loan loan) {
+
+		header.setContentType(MediaType.APPLICATION_JSON_UTF8);
+
+		HttpEntity<User> requestEntity = new HttpEntity<>(user);
+
+		ResponseEntity<String> responseEntity = null;
+		String requestURL = "http://localhost:8090/lms/";
+		try {
+
+			responseEntity = restTemplate.exchange(requestURL, HttpMethod.POST, requestEntity, String.class);
+			if (responseEntity != null) {
+				String approvalRequest = responseEntity.getBody();
+			}
+
+		} catch (RestClientException exception) {
+			LOGGER.error("There are issues while sending :", exception);
+		}
+	}
+	
 
 }
