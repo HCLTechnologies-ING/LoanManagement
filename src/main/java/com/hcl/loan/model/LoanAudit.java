@@ -1,6 +1,10 @@
 package com.hcl.loan.model;
 
 
+/**
+ * @author Shashikanth.p
+ *
+ */
 public class LoanAudit {
 
 	private String auditId;
