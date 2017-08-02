@@ -5,36 +5,93 @@ import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
+
 public class User implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	private String userId;
-	private String bankAccountNo;
-	private String bankIfscCode;
-	private String bankName;
-	private BigInteger createdBy;
-	private Date createdDate;
-	private String currentEmployer;
-	private Date dateofbirth;
-	private String emailId;
-	private String firstName;
-	private String gender;
-	private byte hniFlag;
-	private String lastName;
-	private String mobileNumber;
-	private BigInteger modifiedBy;
-	private Date modifiedDate;
-	private String password;
-	private String preferredLang;
-	private String repaymentMode;
-	private String status;
-	private List<Loan> loans;
 	
-	public List<Loan> getLoans() {
-		return loans;
+	@NotNull
+	private String userId;
+	
+	@NotNull
+	private String bankAccountNo;
+	
+	@NotNull
+	private String bankIfscCode;
+	
+	@NotNull
+	@Size(min=2, max=50)
+	private String bankName;
+	
+	private BigInteger createdBy;
+	
+	private Date createdDate;
+	
+	@NotNull
+	@Size(min=2, max=50)
+	private String currentEmployer;
+	
+	@NotNull
+	private Date dateofbirth;
+	
+	@NotNull
+	@Email
+	private String emailId;
+	
+	@NotNull
+	@Size(min=2, max=50)
+	private String firstName;
+	
+	@NotNull
+	private String gender;
+	
+	@NotNull
+	private String hniFlag;
+	
+	@NotNull
+	@Size(min=2, max=50)
+	private String lastName;
+	
+	@NotNull
+	private String mobileNumber;
+	
+	private BigInteger modifiedBy;
+	
+	private Date modifiedDate;
+	
+	@NotNull
+	private String password;
+	
+	@NotNull
+	private String preferredLang;
+	
+	@NotNull
+	private String repaymentMode;
+	
+	private String status;
+	
+	@NotNull
+	private List<Address> userAddresses;
+	
+	private String role;
+	
+	private static final String DEFAULT_ROLE_ID="1";
+
+	public List<Address> getAddresses() {
+		return userAddresses;
 	}
-	public void setLoans(List<Loan> loans) {
-		this.loans = loans;
+	public void setUserAddresses(List<Address> userAddresses) {
+		this.userAddresses = userAddresses;
+	}
+	public String getRole() {
+		return DEFAULT_ROLE_ID;
+	}
+	public void setRole(String role) {
+		this.role = role;
 	}
 	public String getUserId() {
 		return userId;
@@ -102,10 +159,10 @@ public class User implements Serializable {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	public byte getHniFlag() {
+	public String getHniFlag() {
 		return hniFlag;
 	}
-	public void setHniFlag(byte hniFlag) {
+	public void setHniFlag(String hniFlag) {
 		this.hniFlag = hniFlag;
 	}
 	public String getLastName() {
