@@ -11,5 +11,5 @@ public interface UserService {
 	
 	public void deleteUser(Long userId);
 	
-	public boolean userExistWithStatus(Long userId, String status);
+	
 }

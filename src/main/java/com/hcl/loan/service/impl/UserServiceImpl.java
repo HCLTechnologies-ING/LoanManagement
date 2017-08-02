@@ -7,9 +7,10 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.hcl.loan.service.*;
 import com.hcl.loan.dao.UserDAO;
 import com.hcl.loan.model.User;
+import com.hcl.loan.service.UserService;
+import com.hcl.loan.service.exception.UserAlreadyExist;
 
 @PropertySource("classpath:error.properties")
 @Service
@@ -22,7 +23,6 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	Environment env;
-
 
 	@Override
 	public User fetchUser(Long userId) {
@@ -44,15 +44,18 @@ public class UserServiceImpl implements UserService {
 
 		return updateUser;
 	}
+
 	@Transactional
 	@Override
 	public Integer persistUser(User user) {
-
+		Integer insertedRecordCount=Integer.getInteger("-1");
 		logger.debug("persistUser(id) - Method Input - User:" + user);
-		
-		Integer insertedRecordCount = userDao.persistUser(user);
-		logger.debug("persistedUser(user) - Method Output - Inserted Record Count:" + insertedRecordCount);
-
+		if (!userDao.duplicateUser(user)) {
+			insertedRecordCount = userDao.persistUser(user);
+			logger.debug("persistedUser(user) - Method Output - Inserted Record Count:" + insertedRecordCount);
+		}else {
+			throw new UserAlreadyExist(env.getProperty("LMS.USER.USER_ALREADY_EXIST"));
+		}
 		return insertedRecordCount;
 	}
 
@@ -60,12 +63,7 @@ public class UserServiceImpl implements UserService {
 	public void deleteUser(Long userId) {
 		userDao.deleteUser(userId);
 	}
-	
-	@Override
-	public boolean userExistWithStatus(Long userId, String status) {
-		
-		return userDao.userExistWithStatus(userId,status);
 
-	}
+
 
 }

@@ -11,5 +11,6 @@ public interface UserDAO {
 	
 	public void deleteUser(Long userId);
 	
-	public boolean userExistWithStatus(Long userId, String status);
+	public boolean duplicateUser(User user);
+	
 }
