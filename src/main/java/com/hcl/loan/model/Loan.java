@@ -2,6 +2,7 @@ package com.hcl.loan.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 /**
  * 
  * Model class for Loan.
@@ -17,8 +18,8 @@ public class Loan implements Serializable {
 	
 	private Long loanId;
 	private Long roleName;
-	private LocalDateTime startDate;
-	private LocalDateTime endDate;
+	private Date startDate;
+	private Date endDate;
 	private Integer loanTypeId;
 	private Integer userId; 
 	private Double monthlyEMI;
@@ -31,6 +32,8 @@ public class Loan implements Serializable {
 	private String pendingWith;
 	private String remarks;
 	private Boolean eligible;
+	private Double disbursementId;
+	
 	public Long getLoanId() {
 		return loanId;
 	}
@@ -43,16 +46,17 @@ public class Loan implements Serializable {
 	public void setRoleName(Long roleName) {
 		this.roleName = roleName;
 	}
-	public LocalDateTime getStartDate() {
+	
+	public Date getStartDate() {
 		return startDate;
 	}
-	public void setStartDate(LocalDateTime startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
-	public LocalDateTime getEndDate() {
+	public Date getEndDate() {
 		return endDate;
 	}
-	public void setEndDate(LocalDateTime endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 	public Integer getLoanTypeId() {
@@ -127,5 +131,10 @@ public class Loan implements Serializable {
 	public void setEligible(Boolean eligible) {
 		this.eligible = eligible;
 	}
-	
+	public Double getDisbursementId() {
+		return disbursementId;
+	}
+	public void setDisbursementId(Double disbursementId) {
+		this.disbursementId = disbursementId;
+	}	
 }

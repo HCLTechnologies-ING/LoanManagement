@@ -6,6 +6,6 @@ import com.hcl.loan.model.User;
 
 public interface LoanRequestService {
 	
-	public Long createLoanRequest(User user, Loan loan);	
+	public Loan createLoanRequest(User user, Loan loan);	
 
 }

@@ -1,6 +1,6 @@
 package com.hcl.loan.dao;
 
-import com.hcl.loan.entity.Loan;
+import com.hcl.loan.model.Loan;
 
 public interface LoanRequestDAO {
 
