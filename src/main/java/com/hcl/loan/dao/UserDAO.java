@@ -7,7 +7,7 @@ public interface UserDAO {
 	public User fetchUser(Long userId);	
 	public User updateUser(Long userId, User user);
 	 
-	public Integer persistUser(User user);
+	public Integer persistUser(User user );
 	
 	public void deleteUser(Long userId);
 	
