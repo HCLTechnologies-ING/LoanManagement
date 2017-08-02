@@ -28,14 +28,25 @@ public class Loan implements Serializable {
 	private String loanStatus;
 	private String pendingWith;
 	private String remarks;
-	private boolean eligibilityCheck;
+	private boolean eligible;
+	private String status;
+	
 
-	public boolean isEligibilityCheck() {
-		return eligibilityCheck;
+
+	public String getStatus() {
+		return status;
 	}
 
-	public void setEligibilityCheck(boolean eligibilityCheck) {
-		this.eligibilityCheck = eligibilityCheck;
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public boolean isEligible() {
+		return eligible;
+	}
+
+	public void setEligible(boolean eligible) {
+		this.eligible = eligible;
 	}
 
 	public Long getLoanId() {
