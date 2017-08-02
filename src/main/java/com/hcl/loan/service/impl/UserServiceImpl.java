@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.hcl.loan.service.*;
 import com.hcl.loan.dao.UserDAO;
 import com.hcl.loan.model.User;
@@ -42,12 +44,12 @@ public class UserServiceImpl implements UserService {
 
 		return updateUser;
 	}
-
+	@Transactional
 	@Override
 	public Integer persistUser(User user) {
 
 		logger.debug("persistUser(id) - Method Input - User:" + user);
-
+		
 		Integer insertedRecordCount = userDao.persistUser(user);
 		logger.debug("persistedUser(user) - Method Output - Inserted Record Count:" + insertedRecordCount);
 
