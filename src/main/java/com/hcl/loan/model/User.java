@@ -12,7 +12,7 @@ import org.hibernate.validator.constraints.Email;
 
 public class User implements Serializable {
 	
-	private static final long serialVersionUID = 12L;
+	private static final long serialVersionUID = 123L;
 	
 	
 	private String userId;
