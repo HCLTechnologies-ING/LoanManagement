@@ -121,7 +121,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public boolean duplicateUser(User user) {
+	public boolean existingUserCheck(User user) {
 
 		if (user == null) {
 			return false;

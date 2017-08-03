@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
 	public Integer persistUser(User user) {
 		Integer insertedRecordCount=Integer.getInteger("-1");
 		logger.debug("persistUser(id) - Method Input - User:" + user);
-		if (!userDao.duplicateUser(user)) {
+		if (!userDao.existingUserCheck(user)) {
 			insertedRecordCount = userDao.persistUser(user);
 			logger.debug("persistedUser(user) - Method Output - Inserted Record Count:" + insertedRecordCount);
 		}else {

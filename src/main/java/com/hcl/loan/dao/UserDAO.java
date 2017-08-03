@@ -11,6 +11,6 @@ public interface UserDAO {
 	
 	public void deleteUser(Long userId);
 	
-	public boolean duplicateUser(User user);
+	public boolean existingUserCheck(User user);
 	
 }
