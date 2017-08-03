@@ -24,7 +24,6 @@ import com.hcl.loan.service.impl.UserServiceImpl;
 
 @Configuration
 @EnableWebMvc
-@PropertySource("classpath:sql.properties")
 @ComponentScan(basePackages = "com.hcl.loan.controller")
 public class LoanWebConfig {
 	
@@ -86,5 +85,8 @@ public class LoanWebConfig {
 	        return dataSource;
 	    }
 	     
-
+	 @Bean
+	 public PropertySourcesPlaceholderConfigurer placeHolderConfigurer() {
+	  return new PropertySourcesPlaceholderConfigurer();
+	 }
 }

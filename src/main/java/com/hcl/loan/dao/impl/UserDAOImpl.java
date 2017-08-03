@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -22,7 +23,7 @@ import com.hcl.loan.model.User;
 public class UserDAOImpl implements UserDAO {
 
 	private static final String FETCH_USER_BYID_STATUS = "SELECT * FROM User where user_id = ? and status = ?";
-	private static final String DUPLICATE_USER_CHK = "SELECT * FROM User where email_id = ? or (upper(first_name)=upper(?) and date_format(dateofbirth,'%Y-%m-%d')=date_format(?,'%Y-%m-%d'))";
+	private static final String DUPLICATE_USER_CHK="SELECT * FROM User where email_id = ? or (upper(first_name)=upper(?) and date_format(dateofbirth,'%Y-%m-%d')=date_format(?,'%Y-%m-%d'))";
 	private static final String UPDATE_USER_STATUS = "update user set status = ? where user_id = ?";
 	private static final String INSERT_USER = "INSERT INTO USER(FIRST_NAME , LAST_NAME, ROLE_ID, GENDER, DATEOFBIRTH, PASSWORD, HNI_FLAG, EMAIL_ID, MOBILE_NUMBER, STATUS, PREFERRED_LANG, CURRENT_EMPLOYER, BANK_ACCOUNT_NO , BANK_NAME, BANK_IFSC_CODE, REPAYMENT_MODE,CREATED_DATE,MODIFIED_DATE) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String INSERT_USER_ADD = "INSERT INTO USER_ADDRESS(USER_ID,ADDRESS_TYPE,ADDRESS1,ADDRESS2,CITY,STATE,COUNTRY,PINCODE) VALUES(?,?,?,?,?,?,?,?)";
@@ -46,11 +47,19 @@ public class UserDAOImpl implements UserDAO {
 	public User fetchUser(Long userId) {
 
 		logger.debug("fetchUser(id) - Method Input - " + userId);
+		logger.debug("fetchUser(id) - Method Input - " + env.toString());
 		User user;
 		if (userId == null) {
 			return new User();
 		} else {
-			logger.debug("Query - " + env.getProperty("FETCHUSER"));
+			logger.debug("Query - " + env.getProperty("LMS.USER.SQL.FETCH_USER_BYID_STATUS"));
+			logger.debug("Query - " + env.getProperty("LMS.USER.SQL.DUPLICATE_USER_CHK"));
+			logger.debug("Query - " + env.getProperty("LMS.USER.SQL.UPDATE_USER_STATUS"));
+			logger.debug("Query - " + env.getProperty("LMS.USER.SQL.INSERT_USER"));
+			logger.debug("Query - " + env.getProperty("LMS.USER.SQL.INSERT_USER_ADD"));
+			logger.debug("Query - " + env.getProperty("LMS.USER.SQL.FETCH_USER_ADDRESS"));
+			logger.debug("Query - " + env.getProperty("LMS.USER.SQL.SELECT_MAX_USERID"));
+			logger.debug("Query - " + env.getProperty("LMS.USER.SQL.FETCH_USER_BYID_STATUS"));
 			user=jdbcTemplate.queryForObject(FETCH_USER_BYID_STATUS, new Object[] { userId, "ACTIVE" },
 					new UserRowMapper());
 			user.setUserAddresses(fetchUserAddress(userId));
@@ -65,7 +74,7 @@ public class UserDAOImpl implements UserDAO {
 		if (userId == null) {
 			return new ArrayList();
 		} else {
-			logger.debug("Query - " + env.getProperty("FETCHUSER"));
+			logger.debug("Query - " + env.getProperty("FETCH_USER_ADDRESS"));
 			return jdbcTemplate.query(FETCH_USER_ADDRESS, new AddressRowMapper(),userId);
 		}
 
@@ -82,7 +91,7 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public Integer persistUser(User user) {
 
-		Integer ret = Integer.getInteger("2");
+		Integer ret = Integer.getInteger("-2");
 		
 		jdbcTemplate.update(INSERT_USER, user.getFirstName(), user.getLastName(), user.getRole(), user.getGender(),
 				user.getDateofbirth(), user.getPassword(), user.getHniFlag(), user.getEmailId(), user.getMobileNumber(),
@@ -136,5 +145,7 @@ public class UserDAOImpl implements UserDAO {
 		}
 
 	}
+	
+	
 
 }
