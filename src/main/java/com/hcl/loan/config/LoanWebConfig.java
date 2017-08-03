@@ -24,6 +24,7 @@ import com.hcl.loan.service.impl.UserServiceImpl;
 
 @Configuration
 @EnableWebMvc
+@PropertySource("classpath:sql.properties")
 @ComponentScan(basePackages = "com.hcl.loan.controller")
 public class LoanWebConfig {
 	

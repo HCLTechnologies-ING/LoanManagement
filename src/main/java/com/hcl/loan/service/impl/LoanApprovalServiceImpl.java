@@ -1,98 +1,111 @@
 package com.hcl.loan.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.hcl.loan.constants.LoanApprovalConstants;
 import com.hcl.loan.dao.LoanApprovalDAO;
 import com.hcl.loan.model.Loan;
-import com.hcl.loan.model.User;
 import com.hcl.loan.service.LoanApprovalService;
 
 @Service
 public class LoanApprovalServiceImpl implements LoanApprovalService {
 
+	private Logger logger = Logger.getLogger(LoanApprovalServiceImpl.class.getName());
 	@Autowired
 	LoanApprovalDAO loanApprovalDAO;
 
+	/**
+	 * Method will handle the auto approval of the applied loan
+	 * 
+	 * @param loan
+	 * @return
+	 */
 	@Transactional
-	public Loan approvalDecision(Loan loan) {
-		Loan approvalLoan = loanApprovalDAO.approvalDecision(loan);
-		return approvalLoan;
-	}
-
-	@Transactional
-	public Loan getAutoApproval(Loan loan) {
-		if (loan.isEligible() && getCredibilityScore() > 500) {
-			if (loan.getAppliedLoanAmount() <= 1000000) {
-				loan.setApprovedLoanAmount(loan.getAppliedLoanAmount());
-				loan.setLoanStatus("Approved");
-				loan.setRemarks("Auto-approved");
-				loan.setPendingWith("None");
-				loanApprovalDAO.updateLoan(loan);
-				loanApprovalDAO.updateAuditLog(loan);
-			} else {
-				
-				if ((loanApprovalDAO.getHNI(loan.getUserId()) == 1) && loan.getAppliedLoanAmount() <= 5000000) {
-					loan.setApprovedLoanAmount(loan.getAppliedLoanAmount() * 0.9);
-					loan.setLoanStatus("Approved");
-					loan.setRemarks("Auto-approved");
-					loan.setPendingWith("None");
+	public void updateAutoApproval(Loan loan) {
+		logger.info("Inside LoanApprovalServiceImpl: updateAutoApproval()");
+		if (loan != null) {
+			if (loan.isEligible()) {
+				if (loan.getAppliedLoanAmount() <= 1000000) {
+					loan.setApprovedLoanAmount(loan.getAppliedLoanAmount());
+					loan.setLoanStatus(LoanApprovalConstants.LOAN_AUTO_APPROVED);
+					loan.setRemarks(LoanApprovalConstants.LOAN_AUTO_APPROVED);
+					loan.setPendingWith(LoanApprovalConstants.PENDING_WITH_NONE);
 					loanApprovalDAO.updateLoan(loan);
 					loanApprovalDAO.updateAuditLog(loan);
 				} else {
-					loan.setApprovedLoanAmount(0.0);
-					loan.setLoanStatus("Pending with Manager");
-					loan.setRemarks("Loan11");
-					loan.setPendingWith("Manager");
-					loanApprovalDAO.updateLoan(loan);
-					loanApprovalDAO.updateAuditLog(loan);
+					if ((loanApprovalDAO.getHNI(loan.getUserId()) == 1) && loan.getAppliedLoanAmount() <= 5000000) {
+						loan.setApprovedLoanAmount(loan.getAppliedLoanAmount() * 0.9);
+						loan.setLoanStatus(LoanApprovalConstants.LOAN_AUTO_APPROVED);
+						loan.setRemarks(LoanApprovalConstants.LOAN_AUTO_APPROVED);
+						loan.setPendingWith(LoanApprovalConstants.PENDING_WITH_NONE);
+						loanApprovalDAO.updateLoan(loan);
+						loanApprovalDAO.updateAuditLog(loan);
+					} else {
+						loan.setApprovedLoanAmount(0.0);
+						loan.setLoanStatus(LoanApprovalConstants.PENDING_WITH_MANAGER);
+						loan.setRemarks(LoanApprovalConstants.PENDING_WITH_MANAGER);
+						loan.setPendingWith(LoanApprovalConstants.MANAGER);
+						loanApprovalDAO.updateLoan(loan);
+						loanApprovalDAO.updateAuditLog(loan);
+					}
 				}
+			} else {
+				loan.setApprovedLoanAmount(0.0);
+				loan.setLoanStatus(LoanApprovalConstants.LOAN_AUTO_REJECTED);
+				loan.setRemarks(LoanApprovalConstants.LOAN_AUTO_REJECTED);
+				loan.setPendingWith(LoanApprovalConstants.PENDING_WITH_NONE);
+				loanApprovalDAO.updateLoan(loan);
+				loanApprovalDAO.updateAuditLog(loan);
 			}
-		} else {
-			loan.setApprovedLoanAmount(0.0);
-			loan.setLoanStatus("Rejected");
-			loan.setRemarks("Customer11");
-			loan.setPendingWith("None");
-			loanApprovalDAO.updateLoan(loan);
-			loanApprovalDAO.updateAuditLog(loan);
 		}
-		return loan;
+		logger.info("LoanApprovalServiceImpl - updateAutoApproval Successfully fetch Loan details");
 	}
 
-	public void getManualApproval(Loan loan) {
+	/**
+	 * Method will handle the manual approval of the applied loan
+	 * 
+	 * @param loan
+	 * @return
+	 */
+	@Transactional
+	public void updateManualApproval(Loan loan) {
+		logger.info("Inside LoanApprovalServiceImpl: updateManualApproval()");
 		if (loan.getStatus().equalsIgnoreCase("1")) {
 			loan.setApprovedLoanAmount(loan.getAppliedLoanAmount());
-			loan.setLoanStatus("Approved");
-			loan.setRemarks("Manually Approved with full amount");
-			loan.setPendingWith("None");
+			loan.setLoanStatus(LoanApprovalConstants.LOAN_MANUALLY_APPROVED);
+			loan.setRemarks(LoanApprovalConstants.LOAN_MANUALLY_APPROVED);
+			loan.setPendingWith(LoanApprovalConstants.PENDING_WITH_NONE);
 			loanApprovalDAO.updateLoan(loan);
 			loanApprovalDAO.updateAuditLog(loan);
 		} else {
 			loan.setApprovedLoanAmount(0.0);
-			loan.setLoanStatus("0");
-			loan.setRemarks("Manually Rejected");
-			loan.setPendingWith("None");
+			loan.setLoanStatus(LoanApprovalConstants.LOAN_MANUALLY_REJECTED);
+			loan.setRemarks(LoanApprovalConstants.LOAN_MANUALLY_REJECTED);
+			loan.setPendingWith(LoanApprovalConstants.PENDING_WITH_NONE);
 			loanApprovalDAO.updateLoan(loan);
 			loanApprovalDAO.updateAuditLog(loan);
 		}
-
+		logger.info("LoanApprovalServiceImpl - updateAutoApproval Successfully fetch Loan details");
 	}
 
-	public List<Loan> getAllPendingLoans(String userId) {
-		List<Loan> loanList = new ArrayList<Loan>();
-		loanList = loanApprovalDAO.getPendingLoans();
+	/**
+	 * Method return all the pending loans with approver
+	 * 
+	 * @return List<Loan>
+	 */
+	@Transactional
+	public List<Loan> getAllPendingLoans() {
+		logger.info("Inside LoanApprovalServiceImpl: getAllPendingLoans()");
+		List<Loan> loanList = loanApprovalDAO.getPendingLoans();
 		return loanList;
 
 	}
 
-	private int getCredibilityScore() {
-		Random random = new Random();
-		return random.nextInt(1500);
-	}
 
 }

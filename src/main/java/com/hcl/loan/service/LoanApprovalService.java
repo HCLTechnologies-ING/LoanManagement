@@ -9,10 +9,24 @@ import com.hcl.loan.model.Loan;
 @Service
 public interface LoanApprovalService {
 
-	public Loan getAutoApproval(Loan loan);
+	/**
+	 * Method will handle the auto approval of the applied loan
+	 * @param loan
+	 * @return
+	 */
+	public void updateAutoApproval(Loan loan);
 
-	public void getManualApproval(Loan loan);
+	/**
+	 * Method will handle the manual approval of the applied loan
+	 * @param loan
+	 * @return
+	 */
+	public void updateManualApproval(Loan loan);
 
-	public List<Loan> getAllPendingLoans(String userId);
+	/**
+	 * Method return all the pending loans with approver
+	 * @return List<Loan>
+	 */
+	public List<Loan> getAllPendingLoans();
 
 }
